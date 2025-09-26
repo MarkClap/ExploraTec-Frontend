@@ -5,6 +5,9 @@ import { Main } from "./public/Main";
 import { Dashboard } from "./private/Dashboard";
 import { PublicRoute } from "./routes/PublicRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import TestChatbot from "./public/tour360/TestChatbot";
+import UserConversationsPage from "./private/UserConversationsPage";
+import ConversationMessagesPage from "./private/ConversationMessagesPage ";
 
 function App() {
   return (
@@ -39,6 +42,15 @@ function App() {
         />
 
         <Route
+          path="/test-chatbot"
+          element={
+            <ProtectedRoute roles={["USER", "ADMIN"]}>
+              <TestChatbot />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/dashboard"
           element={
             <ProtectedRoute roles={["ADMIN"]}>
@@ -46,6 +58,25 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/users/:userId/conversations"
+          element={
+            <ProtectedRoute roles={["ADMIN"]}>
+              <UserConversationsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/user/:userId/conversations/:conversationId/messages"
+          element={
+            <ProtectedRoute roles={["ADMIN"]}>
+              <ConversationMessagesPage />
+            </ProtectedRoute>
+          }
+        />
+
 
         {/* Redirección default */}
         <Route path="*" element={<Navigate to="/login" replace />} />
