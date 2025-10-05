@@ -5,7 +5,7 @@ import { Main } from "./public/Main";
 import { Dashboard } from "./private/Dashboard";
 import { PublicRoute } from "./routes/PublicRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import TestChatbot from "./public/tour360/TestChatbot";
+import ChatbotTourPage from "./public/tour360/ChatbotWithTourPage";
 import UserConversationsPage from "./private/UserConversationsPage";
 import ConversationMessagesPage from "./private/ConversationMessagesPage ";
 
@@ -45,7 +45,7 @@ function App() {
           path="/test-chatbot"
           element={
             <ProtectedRoute roles={["USER", "ADMIN"]}>
-              <TestChatbot />
+              <ChatbotTourPage />
             </ProtectedRoute>
           }
         />

@@ -1,13 +1,16 @@
+import React from "react";
 import { useState } from "react";
+import VirtualTour from "../../components/VirtualTour/VirtualTour";
 import { ChatbotModal } from "../../components";
 import chatbotImage from "../../assets/robottecsup.png";
 
-export default function TestChatbot() {
-  const [open, setOpen] = useState(false);
 
+const ChatbotTourPage: React.FC = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-100 to-sky-200">
-      <h1 className="text-3xl font-bold text-sky-900">Recorrido Virtual</h1>
+    <div className="relative min-h-screen">
+      {/* Recorrido Virtual */}
+      <VirtualTour />
 
       {/* Botón flotante del chatbot */}
       <div className="fixed bottom-6 left-6 z-50">
@@ -23,4 +26,5 @@ export default function TestChatbot() {
       {open && <ChatbotModal onClose={() => setOpen(false)} />}
     </div>
   );
-}
+};
+export default ChatbotTourPage;
