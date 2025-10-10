@@ -1,8 +1,10 @@
 // src/components/VirtualTour.tsx
 import React, { useEffect, useRef, useState } from "react";
 import Marzipano from "marzipano";
+import { useChatbot } from "../../hooks/useChatbot";
 import appData from "./appData";
 import './VirtualTour.css';
+import { useNavigate } from "react-router-dom";
 
 type SceneData = any;
 
@@ -13,6 +15,10 @@ const VirtualTour: React.FC = () => {
   const [currentSceneId, setCurrentSceneId] = useState<string>("");
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [activeInfoHotspot, setActiveInfoHotspot] = useState<any>(null);
+  const { clearConversation } = useChatbot();
+  const navigate = useNavigate();
+
+
 
   useEffect(() => {
     if (!panoRef.current) return;
@@ -136,8 +142,6 @@ const VirtualTour: React.FC = () => {
     icon.src = '/img/info.png';
     icon.classList.add('info-hotspot-icon');
     wrapper.appendChild(icon);
-
-    // Evento click SIMPLE que abre el modal
     wrapper.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -168,6 +172,11 @@ const VirtualTour: React.FC = () => {
   }
 
   const currentScene = scenesRef.current.find(s => s.data.id === currentSceneId)?.data;
+
+    const handleExitTour = () => {
+    clearConversation();
+    navigate("/");
+  };
 
   return (
     <div className="multiple-scenes flex h-screen relative bg-gray-900 overflow-hidden">
@@ -274,6 +283,15 @@ const VirtualTour: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Botón de salir del recorrido */}
+      <button
+          onClick={handleExitTour}
+          className="absolute top-6 left-6 z-30 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-4 py-3 border border-white/20"
+          title="Salir del recorrido y limpiar conversación"
+          >
+          Salir del tour
+      </button>
 
       {/* Indicador de escena actual */}
       {currentScene && !sidebarOpen && (

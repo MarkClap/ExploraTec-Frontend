@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FiSend, FiX, FiLogIn } from "react-icons/fi";
+import { FiSend, FiX, FiLogIn, FiHome } from "react-icons/fi";
 import { useChatbot } from "../../hooks/useChatbot";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
-  const { messages, sendUserMessage, loading } = useChatbot();
+  const { messages, sendUserMessage, loading, clearConversation } = useChatbot();
   const [input, setInput] = useState("");
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -45,6 +45,7 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
     navigate("/login");
   };
 
+  // Si no está autenticado, mostrar versión de login
   if (!isAuthenticated) {
     return (
       <div className="fixed bottom-28 left-18 z-50">
@@ -84,21 +85,16 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
     );
   }
 
-  // Versión para usuarios autenticados
+  // Versión normal para usuarios autenticados
   return (
     <div className="fixed bottom-28 left-18 z-50">
       <div
         ref={modalRef}
         className="w-80 h-[450px] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border"
       >
-        {/* Header */}
+        {/* Header con botón de salir */}
         <div className="flex justify-between items-center px-4 py-2 bg-sky-600 text-white">
-          <div className="flex items-center space-x-2">
             <h2 className="text-sm font-semibold">Asistente Virtual</h2>
-          </div>
-          <button onClick={onClose} className="hover:text-gray-200">
-            <FiX className="w-5 h-5" />
-          </button>
         </div>
 
         {/* Chat body */}
@@ -109,10 +105,11 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
               className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`px-3 py-2 rounded-lg text-sm break-words max-w-[70%] ${msg.sender === "user"
-                  ? "bg-sky-600 text-white"
-                  : "bg-gray-200 text-gray-900"
-                  }`}
+                className={`px-3 py-2 rounded-lg text-sm break-words max-w-[70%] ${
+                  msg.sender === "user"
+                    ? "bg-sky-600 text-white"
+                    : "bg-gray-200 text-gray-900"
+                }`}
               >
                 {msg.text}
               </div>
