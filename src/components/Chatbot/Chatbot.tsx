@@ -1,8 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FiSend, FiX } from "react-icons/fi";
+import { FiSend, FiX, FiLogIn } from "react-icons/fi";
 import { useChatbot } from "../../hooks/useChatbot";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
   const { messages, sendUserMessage, loading } = useChatbot();
   const [input, setInput] = useState("");
 
@@ -36,6 +40,51 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
     }
   };
 
+  const handleLogin = () => {
+    onClose();
+    navigate("/login");
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="fixed bottom-28 left-18 z-50">
+        <div
+          ref={modalRef}
+          className="w-80 h-[450px] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border"
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center px-4 py-2 bg-sky-600 text-white">
+            <h2 className="text-sm font-semibold">Asistente Virtual</h2>
+            <button onClick={onClose} className="hover:text-gray-200">
+              <FiX className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Contenido para usuarios no autenticados */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6 bg-sky-50 text-center">
+            <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-4">
+              <FiLogIn className="w-8 h-8 text-sky-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Inicia sesión para usar el asistente
+            </h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Accede a tu cuenta para poder chatear con nuestro asistente virtual y obtener ayuda personalizada.
+            </p>
+            <button
+              onClick={handleLogin}
+              className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2"
+            >
+              <FiLogIn className="w-4 h-4" />
+              <span>Iniciar sesión</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Versión para usuarios autenticados
   return (
     <div className="fixed bottom-28 left-18 z-50">
       <div
@@ -44,7 +93,9 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
       >
         {/* Header */}
         <div className="flex justify-between items-center px-4 py-2 bg-sky-600 text-white">
-          <h2 className="text-sm font-semibold">Asistente Virtual</h2>
+          <div className="flex items-center space-x-2">
+            <h2 className="text-sm font-semibold">Asistente Virtual</h2>
+          </div>
           <button onClick={onClose} className="hover:text-gray-200">
             <FiX className="w-5 h-5" />
           </button>
@@ -58,11 +109,10 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
               className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`px-3 py-2 rounded-lg text-sm break-words max-w-[70%] ${
-                  msg.sender === "user"
-                    ? "bg-sky-600 text-white"
-                    : "bg-gray-200 text-gray-900"
-                }`}
+                className={`px-3 py-2 rounded-lg text-sm break-words max-w-[70%] ${msg.sender === "user"
+                  ? "bg-sky-600 text-white"
+                  : "bg-gray-200 text-gray-900"
+                  }`}
               >
                 {msg.text}
               </div>
@@ -84,7 +134,8 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
           />
           <button
             onClick={handleSend}
-            className="ml-2 bg-sky-600 hover:bg-sky-700 text-white p-2 rounded-full"
+            disabled={loading}
+            className="ml-2 bg-sky-600 hover:bg-sky-700 disabled:bg-sky-400 text-white p-2 rounded-full transition-colors duration-200"
           >
             <FiSend className="w-4 h-4" />
           </button>

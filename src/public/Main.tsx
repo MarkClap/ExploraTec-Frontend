@@ -5,7 +5,7 @@ export const Main: React.FC = () => {
     const navigate = useNavigate();
 
     const goToVirtualTour = () => {
-        navigate("/test-chatbot");
+        navigate("/tour360");
 
     };
     return (

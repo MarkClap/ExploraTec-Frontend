@@ -15,22 +15,22 @@ const UserConversationsList: React.FC<ConversationListProps> = ({ userId }) => {
   return (
     <div>
       <ul>
-  {conversations.map((conv) => (
-    <li key={conv.id} className="p-3 border-b flex justify-between items-center">
-      <div>
-        <strong>{conv.title}</strong> ({conv.message_count} mensajes)
-        {conv.is_active && <span className="ml-2 text-blue-500">● Activa</span>}
-      </div>
-      <Link
-  to={`/user/${userId}/conversations/${conv.id}/messages`}
-  className="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
->
-  Ver mensajes
-</Link>
+        {conversations.map((conv) => (
+          <li key={conv.id} className="p-3 border-b flex justify-between items-center">
+            <div>
+              <strong>{conv.title}</strong> ({conv.message_count} mensajes)
+              {conv.is_active && <span className="ml-2 text-blue-500">● Activa</span>}
+            </div>
+            <Link
+              to={`/user/${userId}/conversations/${conv.id}/messages`}
+              className="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700"
+            >
+              Ver mensajes
+            </Link>
 
-    </li>
-  ))}
-</ul>
+          </li>
+        ))}
+      </ul>
 
     </div>
   );

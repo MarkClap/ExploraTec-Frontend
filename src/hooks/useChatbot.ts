@@ -46,5 +46,19 @@ export const useChatbot = () => {
     }
   };
 
-  return { messages, sendUserMessage, loading };
+  // Función para limpiar la conversación
+  const clearConversation = () => {
+    setMessages([
+      { sender: "bot", text: "¡Hola! Soy tu asistente virtual 🤖, ¿en qué puedo ayudarte?" }
+    ]);
+    setConversationId(null);
+  };
+
+  return { 
+    messages, 
+    sendUserMessage, 
+    loading, 
+    clearConversation,
+    conversationId // Opcional: si quieres exponer el ID de conversación
+  };
 };

@@ -16,9 +16,9 @@ const VirtualTour: React.FC = () => {
 
   useEffect(() => {
     if (!panoRef.current) return;
-    
+
     panoRef.current.style.overflow = 'hidden';
-    
+
     const M = (Marzipano as any);
 
     const viewer = new M.Viewer(panoRef.current, {
@@ -76,7 +76,7 @@ const VirtualTour: React.FC = () => {
         if (viewerRef.current && typeof viewerRef.current.destroy === "function") {
           viewerRef.current.destroy();
         }
-      } catch {}
+      } catch { }
       viewerRef.current = null;
       scenesRef.current = [];
     };
@@ -115,7 +115,7 @@ const VirtualTour: React.FC = () => {
     wrapper.appendChild(icon);
     wrapper.appendChild(tooltip);
 
-    wrapper.addEventListener('click', function() {
+    wrapper.addEventListener('click', function () {
       const targetScene = findSceneById(hotspot.target);
       if (targetScene) {
         targetScene.scene.switchTo();
@@ -131,7 +131,7 @@ const VirtualTour: React.FC = () => {
   function createSimpleInfoHotspotElement(hotspot: any) {
     const wrapper = document.createElement('div');
     wrapper.classList.add('hotspot', 'info-hotspot', 'simple-info-hotspot');
-    
+
     const icon = document.createElement('img');
     icon.src = '/img/info.png';
     icon.classList.add('info-hotspot-icon');
@@ -153,7 +153,7 @@ const VirtualTour: React.FC = () => {
   function stopTouchAndScrollEventPropagation(element: HTMLElement) {
     const eventList = ['touchstart', 'touchmove', 'touchend', 'touchcancel', 'wheel', 'mousewheel'];
     for (let i = 0; i < eventList.length; i++) {
-      element.addEventListener(eventList[i], function(event) {
+      element.addEventListener(eventList[i], function (event) {
         event.stopPropagation();
       });
     }
@@ -162,7 +162,7 @@ const VirtualTour: React.FC = () => {
   function findSceneById(id: string) {
     return scenesRef.current.find((s) => s.data.id === id) ?? null;
   }
-  
+
   function findSceneDataById(id: string) {
     return appData.scenes.find((s: any) => s.id === id) ?? null;
   }
@@ -171,34 +171,34 @@ const VirtualTour: React.FC = () => {
 
   return (
     <div className="multiple-scenes flex h-screen relative bg-gray-900 overflow-hidden">
-      
+
       {/* Panorama */}
-      <div 
-        id="pano" 
-        ref={panoRef} 
+      <div
+        id="pano"
+        ref={panoRef}
         className="flex-1 w-full h-full"
       />
 
-      {/* Sidebar */}
+      {/* Sidebar*/}
       <aside
         id="sceneList"
         className={`
-          fixed top-0 left-0 h-full z-40 transition-transform duration-300
+          fixed top-0 right-0 h-full z-40 transition-transform duration-300
           bg-white/95 backdrop-blur-xl shadow-2xl overflow-y-auto
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}
         `}
         style={{ width: '280px' }}
       >
         {sidebarOpen && (
           <div className="p-6">
-            <img 
-              src="/img/tecsup-logo.png" 
-              alt="Tecsup Logo" 
+            <img
+              src="/img/tecsup-logo.png"
+              alt="Tecsup Logo"
               className="w-4/5 mx-auto my-5 p-2"
             />
-            
+
             <h3 className="text-xl font-bold text-gray-800 mb-4">Ubicaciones</h3>
-            
+
             <ul className="space-y-2">
               {appData.scenes.map((s: SceneData) => (
                 <li
@@ -206,16 +206,15 @@ const VirtualTour: React.FC = () => {
                   onClick={() => handleSwitchScene(s.id)}
                   className={`
                     p-3 rounded-lg cursor-pointer transition-all duration-200 border
-                    ${currentSceneId === s.id ? 
-                      'bg-indigo-100 text-indigo-700 border-indigo-300 shadow-md' : 
+                    ${currentSceneId === s.id ?
+                      'bg-indigo-100 text-indigo-700 border-indigo-300 shadow-md' :
                       'bg-white border-gray-200 text-gray-700 hover:border-indigo-200 hover:bg-gray-50'
                     }
                   `}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-2 h-2 rounded-full ${
-                      currentSceneId === s.id ? 'bg-indigo-500' : 'bg-gray-400'
-                    }`} />
+                    <div className={`w-2 h-2 rounded-full ${currentSceneId === s.id ? 'bg-sky-500' : 'bg-gray-400'
+                      }`} />
                     <span className="font-medium">{s.name}</span>
                   </div>
                 </li>
@@ -225,64 +224,52 @@ const VirtualTour: React.FC = () => {
         )}
       </aside>
 
-      {/* Botón toggle sidebar */}
+      {/* Botón toggle sidebar*/}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className={`
           absolute top-1/2 z-50 bg-white rounded-full p-3 shadow-lg 
           transition-all duration-300 hover:shadow-xl transform -translate-y-1/2
           border border-gray-200
-          ${sidebarOpen ? 'left-72' : 'left-4'}
+          ${sidebarOpen ? 'right-72' : 'right-4'}
         `}
       >
-        {sidebarOpen ? '◀' : '▶'}
+        {sidebarOpen ? '▶' : '◀'}
       </button>
 
-      {/* Modal de información MEJORADO */}
+      {/* Modal de información*/}
       {activeInfoHotspot && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
           onClick={() => setActiveInfoHotspot(null)}
         >
-          <div 
+          <div
             className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                    <img src="/img/info.png" alt="Info" className="w-6 h-6 filter brightness-0 invert" />
-                  </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <img src="/img/info.png" alt="Info" className="w-6 h-6 filter brightness-0 invert" />
                 </div>
-                <button
-                  onClick={() => setActiveInfoHotspot(null)}
-                  className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                >
-                  <span className="text-white text-xl font-bold">×</span>
-                </button>
               </div>
+              <button
+                onClick={() => setActiveInfoHotspot(null)}
+                className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+              >
+                <span className="text-white text-xl font-bold">×</span>
+              </button>
+            </div>
 
             {/* Contenido */}
             <div className="flex-1 p-6 overflow-y-auto">
-              <div 
+              <div
                 className="prose prose-lg max-w-none text-gray-700"
-                dangerouslySetInnerHTML={{ 
-                  __html: activeInfoHotspot.text || 'No hay información disponible.' 
+                dangerouslySetInnerHTML={{
+                  __html: activeInfoHotspot.text || 'No hay información disponible.'
                 }}
               />
-            </div>
-
-            {/* Footer */}
-            <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
-              <div className="flex justify-end">
-                <button
-                  onClick={() => setActiveInfoHotspot(null)}
-                  className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold transition-all duration-300 hover:shadow-lg"
-                >
-                  Cerrar
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -290,9 +277,9 @@ const VirtualTour: React.FC = () => {
 
       {/* Indicador de escena actual */}
       {currentScene && !sidebarOpen && (
-        <div className="absolute top-6 left-6 z-30 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-4 py-3 border border-white/20">
+        <div className="absolute top-6 right-6 z-30 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-4 py-3 border border-white/20">
           <div className="flex items-center space-x-3">
-            <div className="w-3 h-3 bg-indigo-500 rounded-full animate-pulse" />
+            <div className="w-3 h-3 bg-sky-500 rounded-full animate-pulse" />
             <span className="font-semibold text-gray-800">{currentScene.name}</span>
           </div>
         </div>

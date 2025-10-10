@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Público (solo si no está logeado) */}
+        {/* Rutas públicas que SOLO deben ser accesibles para usuarios NO autenticados */}
         <Route
           path="/login"
           element={
@@ -31,25 +31,11 @@ function App() {
           }
         />
 
-        {/* Protegidos */}
-        <Route
-          path="/main"
-          element={
-            <ProtectedRoute roles={["USER", "ADMIN"]}>
-              <Main />
-            </ProtectedRoute>
-          }
-        />
+        {/* Rutas públicas que pueden ser accedidas*/}
+        <Route path="/" element={<Main />} />
+        <Route path="/tour360" element={<ChatbotTourPage />} />
 
-        <Route
-          path="/test-chatbot"
-          element={
-            <ProtectedRoute roles={["USER", "ADMIN"]}>
-              <ChatbotTourPage />
-            </ProtectedRoute>
-          }
-        />
-
+        {/* Rutas protegidas que requieren autenticación */}
         <Route
           path="/dashboard"
           element={
@@ -77,9 +63,8 @@ function App() {
           }
         />
 
-
         {/* Redirección default */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

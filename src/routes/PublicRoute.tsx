@@ -10,8 +10,7 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
 
   if (isAuthenticated) {
-    // Redirigimos según rol
-    return <Navigate to={user?.is_admin ? "/dashboard" : "/main"} replace />;
+    return <Navigate to={user?.is_admin ? "/dashboard" : "/"} replace />;
   }
 
   return <>{children}</>;
