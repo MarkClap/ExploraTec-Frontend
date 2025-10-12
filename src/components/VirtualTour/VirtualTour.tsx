@@ -1,4 +1,3 @@
-// src/components/VirtualTour.tsx
 import React, { useEffect, useRef, useState } from "react";
 import Marzipano from "marzipano";
 import { useChatbot } from "../../hooks/useChatbot";
@@ -61,7 +60,7 @@ const VirtualTour: React.FC = () => {
         scene.hotspotContainer().createHotspot(el, { yaw: hotspot.yaw, pitch: hotspot.pitch });
       });
 
-      // Info hotspots - VERSIÓN SIMPLIFICADA QUE FUNCIONA
+      // Info hotspots
       (sceneData.infoHotspots || []).forEach((hotspot: any) => {
         const el = createSimpleInfoHotspotElement(hotspot);
         scene.hotspotContainer().createHotspot(el, { yaw: hotspot.yaw, pitch: hotspot.pitch });

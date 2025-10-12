@@ -1,4 +1,3 @@
-// hooks/useChatbot.ts
 import { useState, useEffect } from "react";
 import { sendMessage } from "../services/user/chatService";
 
@@ -60,7 +59,7 @@ export const useChatbot = () => {
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "❌ Error al conectar con el servidor" }
+        { sender: "bot", text: "Error al conectar con el servidor" }
       ]);
     } finally {
       setLoading(false);
