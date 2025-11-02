@@ -70,7 +70,7 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
       <div className="fixed bottom-28 left-18 z-50">
         <div
           ref={modalRef}
-          className="w-80 h-[450px] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border"
+          className="w-96 h-[550px] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border"
         >
           {/* Header */}
           <div className="flex justify-between items-center px-4 py-2 bg-sky-600 text-white">
@@ -109,7 +109,7 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
     <div className="fixed bottom-28 left-18 z-50">
       <div
         ref={modalRef}
-        className="w-80 h-[450px] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border"
+        className="w-96 h-[550px] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border"
       >
         {/* Header con botones */}
         <div className="flex justify-between items-center px-4 py-2 bg-sky-600 text-white">

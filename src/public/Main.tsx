@@ -22,6 +22,7 @@ import EntranceImg from "../assets/img/entrance.png";
 
 import Footer from "../components/Footer/Footer";
 import "../App.css";
+import UserNavbar from "../components/UserNavbar/UserNavbar";
 
 export const Main: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -55,14 +56,7 @@ export const Main: React.FC = () => {
     return (
         <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
             {/* Header con Logout */}
-            <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 px-6 py-5">
-                <div className="flex justify-between items-center max-w-7xl mx-auto w-full">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-                        Main
-                    </h2>
-                    <LogoutButton />
-                </div>
-            </div>
+            <UserNavbar />
 
             {/* Contenido principal */}
             <main className="flex-1 pt-20">
@@ -204,7 +198,7 @@ export const Main: React.FC = () => {
                                     más sobre nuestro campus, laboratorios y la experiencia educativa de Tecsup.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                                    <button className="bg-tecsup hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                    <button className="bg-blue-400 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
                                         Inscribirme ahora
                                     </button>
                                     <button className="border-2 border-tecsup text-tecsup hover:bg-tecsup hover:text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105">
@@ -235,32 +229,6 @@ export const Main: React.FC = () => {
                                     />
                                 </div>
                             </motion.div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Sección Statistics */}
-                <section className="py-24 bg-gray-900 dark:bg-black">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-4xl mx-auto bg-white/5 dark:bg-gray-800/50 backdrop-blur-lg rounded-3xl p-12 border border-white/10 dark:border-gray-600/30">
-                            <div className="flex flex-col items-center text-center space-y-8">
-                                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                                    ¿Por qué mostramos estas{" "}
-                                    <span className="text-tecsup">estadísticas?</span>
-                                </h2>
-                                <p className="text-xl text-gray-300 leading-relaxed max-w-3xl">
-                                    Presentamos estadísticas de las carreras que nuestros visitantes
-                                    seleccionan al inscribirse para visitas guiadas. Esta información
-                                    nos ayuda a entender mejor los intereses de los futuros estudiantes
-                                    y preparar experiencias más personalizadas.
-                                </p>
-                                <div className="bg-white/10 dark:bg-gray-800/70 p-8 rounded-2xl w-full max-w-md border border-white/10 dark:border-gray-600/30 mt-8">
-                                    <div className="text-tecsup text-5xl font-bold mb-4">85%</div>
-                                    <p className="text-gray-300 font-medium text-lg">
-                                        de visitantes eligen carreras tecnológicas
-                                    </p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
