@@ -12,11 +12,13 @@ export const EventServices = {
         if (skip) params.append('skip', skip.toString());
         if (limit) params.append('limit', limit.toString());
 
-        const response = await config.get<Event[]>(`/events?${params.toString()}`);
+        const response = await config.get(`/events/?${params.toString()}`);
+
+        const eventsArray = response.data;
 
         return {
-            events: response.data,
-            total: response.data.length,
+            events: eventsArray,
+            total: eventsArray.length,
             skip: skip || 0,
             limit: limit || 50
         };
