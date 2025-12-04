@@ -5,6 +5,8 @@ export interface Event {
     event_date: string;
     location: string;
     scene_id: number;
+    modalidad: string;
+    link: string;
     is_active: boolean;
     created_at: string;
 }
@@ -15,6 +17,8 @@ export interface EventCreate {
     event_date: string;
     location: string;
     scene_id: number;
+    modalidad: string;
+    link: string;
 }
 
 export interface EventUpdate {
@@ -23,6 +27,8 @@ export interface EventUpdate {
     event_date?: string;
     location?: string;
     scene_id?: number;
+    modalidad?: string;
+    link?: string;
     is_active?: boolean;
 }
 

@@ -30,7 +30,6 @@ export const getMessages = async (
   const params = new URLSearchParams();
   if (skip) params.append('skip', skip.toString());
   if (limit) params.append('limit', limit.toString());
-  
   const response = await config.get<MessagesResponse>(
     `/chatbot/admin/messages?${params.toString()}`
   );

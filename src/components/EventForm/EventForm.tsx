@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Event, EventCreate, EventUpdate } from "../../types/Event";
-import { FiCalendar, FiMapPin, FiType, FiFileText } from "react-icons/fi";
+import { FiCalendar, FiMapPin, FiType, FiFileText, FiLink, FiMonitor } from "react-icons/fi";
+import appData from "../VirtualTour/appData";
 
 interface EventFormProps {
     event?: Event | null;
@@ -21,6 +22,8 @@ export const EventForm: React.FC<EventFormProps> = ({
         event_date: "",
         location: "",
         scene_id: 1,
+        modalidad: "",
+        link: "",
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -32,6 +35,8 @@ export const EventForm: React.FC<EventFormProps> = ({
                 event_date: event.event_date.slice(0, 16),
                 location: event.location,
                 scene_id: event.scene_id,
+                modalidad: event.modalidad || "",
+                link: event.link || "",
             });
         }
     }, [event]);
@@ -59,6 +64,10 @@ export const EventForm: React.FC<EventFormProps> = ({
             newErrors.scene_id = "El ID de escena debe ser mayor a 0";
         }
 
+        if (!formData.modalidad.trim()) {
+            newErrors.modalidad = "La modalidad es requerida";
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -81,7 +90,7 @@ export const EventForm: React.FC<EventFormProps> = ({
     };
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -164,18 +173,26 @@ export const EventForm: React.FC<EventFormProps> = ({
                 <div>
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                         <FiMapPin className="h-4 w-4" />
-                        ID de Escena
+                        Escena
                     </label>
-                    <input
-                        type="number"
+                    <select
                         name="scene_id"
                         value={formData.scene_id}
                         onChange={handleChange}
-                        min="1"
                         className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition duration-150 ${errors.scene_id ? "border-red-300" : "border-gray-300"
                             }`}
                         disabled={loading}
-                    />
+                    >
+                        <option value={0}>Seleccionar escena...</option>
+                        {appData.scenes.map((scene) => {
+                            const sceneId = parseInt(scene.id.split("-")[0]);
+                            return (
+                                <option key={scene.id} value={sceneId}>
+                                    {scene.name}
+                                </option>
+                            );
+                        })}
+                    </select>
                     {errors.scene_id && (
                         <p className="text-red-600 text-sm mt-1">{errors.scene_id}</p>
                     )}
@@ -201,6 +218,52 @@ export const EventForm: React.FC<EventFormProps> = ({
                 {errors.location && (
                     <p className="text-red-600 text-sm mt-1">{errors.location}</p>
                 )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Modalidad */}
+                <div>
+                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                        <FiMonitor className="h-4 w-4" />
+                        Modalidad
+                    </label>
+                    <select
+                        name="modalidad"
+                        value={formData.modalidad}
+                        onChange={handleChange}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition duration-150 ${errors.modalidad ? "border-red-300" : "border-gray-300"
+                            }`}
+                        disabled={loading}
+                    >
+                        <option value="">Seleccionar modalidad...</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Virtual">Virtual</option>
+                    </select>
+                    {errors.modalidad && (
+                        <p className="text-red-600 text-sm mt-1">{errors.modalidad}</p>
+                    )}
+                </div>
+
+                {/* Link */}
+                <div>
+                    <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                        <FiLink className="h-4 w-4" />
+                        Enlace
+                    </label>
+                    <input
+                        type="text"
+                        name="link"
+                        value={formData.link}
+                        onChange={handleChange}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition duration-150 ${errors.link ? "border-red-300" : "border-gray-300"
+                            }`}
+                        placeholder="https://..."
+                        disabled={loading}
+                    />
+                    {errors.link && (
+                        <p className="text-red-600 text-sm mt-1">{errors.link}</p>
+                    )}
+                </div>
             </div>
 
             {/* Botones */}

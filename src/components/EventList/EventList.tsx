@@ -1,6 +1,6 @@
 import React from 'react';
 import { Event } from '../../types/Event';
-import { FiCalendar, FiMapPin, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { FiCalendar, FiMapPin, FiEdit2, FiTrash2, FiLink, FiMonitor } from 'react-icons/fi';
 
 interface EventListProps {
     events: Event[];
@@ -71,6 +71,20 @@ export const EventList: React.FC<EventListProps> = ({
                                     <span className="font-medium">Escena:</span>
                                     <span>#{event.scene_id}</span>
                                 </div>
+                                {event.modalidad && (
+                                    <div className="flex items-center gap-1">
+                                        <FiMonitor className="h-4 w-4" />
+                                        <span>{event.modalidad}</span>
+                                    </div>
+                                )}
+                                {event.link && (
+                                    <div className="flex items-center gap-1">
+                                        <FiLink className="h-4 w-4" />
+                                        <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline truncate max-w-[200px]">
+                                            {event.link}
+                                        </a>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
