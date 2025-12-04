@@ -16,7 +16,15 @@ export const EventForm: React.FC<EventFormProps> = ({
     onCancel,
     loading = false,
 }) => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+        title: string;
+        description: string;
+        event_date: string;
+        location: string | null;
+        scene_id: number | null;
+        modalidad: string;
+        link: string;
+    }>({
         title: "",
         description: "",
         event_date: "",
@@ -56,16 +64,17 @@ export const EventForm: React.FC<EventFormProps> = ({
             newErrors.event_date = "La fecha del evento es requerida";
         }
 
-        if (!formData.location.trim()) {
-            newErrors.location = "La ubicación es requerida";
-        }
-
-        if (formData.scene_id < 1) {
-            newErrors.scene_id = "El ID de escena debe ser mayor a 0";
-        }
-
         if (!formData.modalidad.trim()) {
             newErrors.modalidad = "La modalidad es requerida";
+        }
+
+        if (formData.modalidad === "Presencial") {
+            if (!formData.location || !formData.location.trim()) {
+                newErrors.location = "La ubicación es requerida para eventos presenciales";
+            }
+            if (!formData.scene_id || formData.scene_id < 1) {
+                newErrors.scene_id = "El ID de escena debe ser mayor a 0 para eventos presenciales";
+            }
         }
 
         setErrors(newErrors);
@@ -81,6 +90,8 @@ export const EventForm: React.FC<EventFormProps> = ({
             const submitData = {
                 ...formData,
                 event_date: new Date(formData.event_date).toISOString(),
+                location: formData.modalidad === "Virtual" ? null : formData.location,
+                scene_id: formData.modalidad === "Virtual" ? null : formData.scene_id,
             };
 
             await onSubmit(submitData);
@@ -93,10 +104,22 @@ export const EventForm: React.FC<EventFormProps> = ({
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: name === "scene_id" ? parseInt(value) || 1 : value,
-        }));
+
+        setFormData((prev) => {
+            let newData = { ...prev, [name]: value };
+
+            if (name === "scene_id") {
+                newData.scene_id = parseInt(value) || 0;
+            }
+
+            // Si la modalidad cambia a Virtual, limpiar ubicación y escena
+            if (name === "modalidad" && value === "Virtual") {
+                newData.location = null;
+                newData.scene_id = null;
+            }
+
+            return newData;
+        });
 
         // Clear error when user starts typing
         if (errors[name]) {
@@ -177,11 +200,11 @@ export const EventForm: React.FC<EventFormProps> = ({
                     </label>
                     <select
                         name="scene_id"
-                        value={formData.scene_id}
+                        value={formData.scene_id || 0}
                         onChange={handleChange}
                         className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition duration-150 ${errors.scene_id ? "border-red-300" : "border-gray-300"
-                            }`}
-                        disabled={loading}
+                            } ${formData.modalidad === "Virtual" ? "bg-gray-100 text-gray-400" : ""}`}
+                        disabled={loading || formData.modalidad === "Virtual"}
                     >
                         <option value={0}>Seleccionar escena...</option>
                         {appData.scenes.map((scene) => {
@@ -208,12 +231,12 @@ export const EventForm: React.FC<EventFormProps> = ({
                 <input
                     type="text"
                     name="location"
-                    value={formData.location}
+                    value={formData.location || ""}
                     onChange={handleChange}
                     className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition duration-150 ${errors.location ? "border-red-300" : "border-gray-300"
-                        }`}
+                        } ${formData.modalidad === "Virtual" ? "bg-gray-100 text-gray-400" : ""}`}
                     placeholder="¿Dónde será el evento?"
-                    disabled={loading}
+                    disabled={loading || formData.modalidad === "Virtual"}
                 />
                 {errors.location && (
                     <p className="text-red-600 text-sm mt-1">{errors.location}</p>

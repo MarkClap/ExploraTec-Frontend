@@ -3,8 +3,8 @@ export interface Event {
     title: string;
     description: string;
     event_date: string;
-    location: string;
-    scene_id: number;
+    location: string | null;
+    scene_id: number | null;
     modalidad: string;
     link: string;
     is_active: boolean;
@@ -15,8 +15,8 @@ export interface EventCreate {
     title: string;
     description: string;
     event_date: string;
-    location: string;
-    scene_id: number;
+    location: string | null;
+    scene_id: number | null;
     modalidad: string;
     link: string;
 }
@@ -25,8 +25,8 @@ export interface EventUpdate {
     title?: string;
     description?: string;
     event_date?: string;
-    location?: string;
-    scene_id?: number;
+    location?: string | null;
+    scene_id?: number | null;
     modalidad?: string;
     link?: string;
     is_active?: boolean;

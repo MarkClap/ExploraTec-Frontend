@@ -41,9 +41,14 @@ export const EventList: React.FC<EventListProps> = ({
         );
     }
 
+    // Sort events by date (most recent first)
+    const sortedEvents = [...events].sort((a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+
     return (
         <div className="space-y-4">
-            {events.map((event) => (
+            {sortedEvents.map((event) => (
                 <div
                     key={event.id}
                     className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-shadow duration-200"

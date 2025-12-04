@@ -13,7 +13,20 @@ const MessageContent: React.FC<{ text: string; sender: "user" | "bot" }> = ({ te
 
   return (
     <div className="prose prose-sm max-w-none">
-      <ReactMarkdown>{text}</ReactMarkdown>
+      <ReactMarkdown
+        components={{
+          a: ({ node, ...props }) => (
+            <a
+              {...props}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline font-medium"
+            />
+          )
+        }}
+      >
+        {text}
+      </ReactMarkdown>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from 'react-markdown';
 import { useConversationMessages } from "../../hooks/useConversationMessages";
 
 type Props = {
@@ -88,7 +89,26 @@ const ConversationMessages: React.FC<Props> = ({ userId, conversationId }) => {
                     : "bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm"
                     }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                  <div className="prose prose-sm max-w-none text-sm leading-relaxed">
+                    {msg.is_from_user ? (
+                      <p className="whitespace-pre-wrap">{msg.content}</p>
+                    ) : (
+                      <ReactMarkdown
+                        components={{
+                          a: ({ node, ...props }) => (
+                            <a
+                              {...props}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline font-medium"
+                            />
+                          )
+                        }}
+                      >
+                        {msg.content}
+                      </ReactMarkdown>
+                    )}
+                  </div>
                 </div>
 
                 {/* Información del mensaje */}
