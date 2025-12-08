@@ -129,13 +129,16 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
 
       <div
         ref={modalRef}
-        className="w-full max-w-sm h-[85vh] sm:h-[550px] sm:max-h-[80vh] bg-white rounded-2xl sm:rounded-2xl shadow-xl flex flex-col overflow-hidden border relative sm:absolute sm:bottom-28 sm:left-18"
+        className="
+          w-full max-w-sm bg-white rounded-t-2xl sm:rounded-2xl shadow-xl flex flex-col overflow-hidden border relative 
+          fixed inset-0 sm:relative sm:inset-auto sm:h-[550px] sm:max-h-[80vh] sm:bottom-28 sm:left-18 z-50
+        "
       >
         {/* Header con botones */}
-        <div className="flex justify-between items-center px-4 py-3 bg-sky-600 text-white">
+        <div className="flex justify-between items-center px-4 py-3 bg-sky-600 text-white shrink-0">
           <h2 className="text-sm font-semibold">Asistente Virtual</h2>
-          {/* Botón de cerrar solo en móvil */}
-          <button onClick={onClose} className="sm:hidden hover:text-gray-200">
+          {/* Botón de cerrar visible en móvil y desktop */}
+          <button onClick={onClose} className="hover:text-gray-200">
             <FiX className="w-5 h-5" />
           </button>
         </div>
@@ -250,7 +253,7 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
         </div>
 
         {/* Input */}
-        <div className="p-3 border-t bg-white flex items-center">
+        <div className="p-3 border-t bg-white flex items-center shrink-0 safe-area-bottom">
           <input
             type="text"
             placeholder="Escribe un mensaje..."
@@ -269,6 +272,6 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
           </button>
         </div>
       </div>
-    </div >
+    </div>
   );
 };

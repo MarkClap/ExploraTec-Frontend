@@ -282,7 +282,7 @@ const VirtualTour: React.FC = () => {
       <aside
         id="sceneList"
         className={`
-          fixed top-0 right-0 h-full z-40 transition-transform duration-300
+          hidden md:block fixed top-0 right-0 h-full z-40 transition-transform duration-300
           bg-white/95 backdrop-blur-xl shadow-2xl overflow-y-auto
           ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}
         `}
@@ -327,7 +327,7 @@ const VirtualTour: React.FC = () => {
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className={`
-          absolute top-1/2 z-50 bg-white rounded-full p-3 shadow-lg 
+          hidden md:block absolute top-1/2 z-50 bg-white rounded-full p-3 shadow-lg 
           transition-all duration-300 hover:shadow-xl transform -translate-y-1/2
           border border-gray-200
           ${sidebarOpen ? 'right-72' : 'right-4'}
@@ -385,7 +385,7 @@ const VirtualTour: React.FC = () => {
 
       {/* Indicador de escena actual */}
       {currentScene && !sidebarOpen && (
-        <div className="absolute top-6 right-6 z-30 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-4 py-3 border border-white/20">
+        <div className="hidden md:block absolute top-6 right-6 z-30 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-4 py-3 border border-white/20">
           <div className="flex items-center space-x-3">
             <div className="w-3 h-3 bg-sky-500 rounded-full animate-pulse" />
             <span className="font-semibold text-gray-800">{currentScene.name}</span>

@@ -6,7 +6,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <AdminNavbar />
-      
+
       {/* Contenido principal */}
       <div className="p-6 max-w-7xl mx-auto">
         {/* Header */}
@@ -22,7 +22,7 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Contenedor principal */}
-        <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
+        <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100 overflow-x-auto">
           <UserList />
         </div>
       </div>
