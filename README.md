@@ -1,69 +1,78 @@
-# React + TypeScript + Vite
+# ExploraTec - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**ExploraTec** es una plataforma web interactiva diseñada para ofrecer recorridos virtuales de 360° por el campus de Tecsup. El proyecto integra un asistente virtual basado en IA para guiar a los usuarios y un panel administrativo completo para la gestión de contenido.
 
-Currently, two official plugins are available:
+## 🚀 Características Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Recorridos Virtuales 360°**: Navegación inmersiva utilizando la librería [Marzipano](https://www.marzipano.net/).
+*   **Asistente Virtual (Chatbot)**:
+    *   Integración con IA para responder preguntas sobre el campus.
+    *   Capacidad de "Guiar paso a paso" a los usuarios a ubicaciones específicas dentro del tour.
+    *   Mantiene el contexto de la conversación y la ubicación actual del usuario.
+*   **Panel Administrativo**:
+    *   Gestión de eventos y usuarios.
+    *   Dashboard de métricas y feedback de usuarios.
+    *   Control de escenas y mensajes del chatbot.
+*   **Diseño Responsivo**: Experiencia optimizada para dispositivos móviles y de escritorio.
+*   **Autenticación y Seguridad**: Sistema de login y registro con gestión de roles.
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Este proyecto está construido con un stack moderno y eficiente:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+*   **Core**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+*   **Build Tool**: [Vite](https://vitejs.dev/)
+*   **Estilos**: [Tailwind CSS v4](https://tailwindcss.com/)
+*   **Animaciones**: [Framer Motion](https://www.framer.com/motion/)
+*   **Virtual Tour**: [Marzipano](https://www.marzipano.net/)
+*   **Enrutamiento**: [React Router v7](https://reactrouter.com/)
+*   **Iconos**: [React Icons](https://react-icons.github.io/react-icons/)
+*   **Cliente HTTP**: Axios
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 📦 Instalación y Configuración
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Sigue estos pasos para ejecutar el proyecto localmente:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Prerrequisitos
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+*   Node.js (versión LTS recomendada)
+*   Bun
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Pasos
+
+1.  **Clonar el repositorio**:
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd ExploraTec-Frontend
+    ```
+
+2.  **Instalar dependencias**:
+    ```bash
+    bun install
+    ```
+
+3.  **Configurar variables de entorno**:
+    Crea un archivo `.env` en la raíz del proyecto basado en `.env.example`.
+    ```env
+    VITE_API_URL=http://localhost:8000
+    # Añade otras variables necesarias aquí
+    ```
+
+4.  **Ejecutar el servidor de desarrollo**:
+    ```bash
+    bun dev
+    ```
+
+## 📂 Estructura del Proyecto
+
+El código fuente se encuentra en la carpeta `src` y sigue una estructura modular:
+
+*   `src/components`: Componentes reutilizables de UI (Chatbot, Navbars, etc.).
+*   `src/pages`: Vistas principales de la aplicación.
+*   `src/services`: Lógica de comunicación con el backend (API services).
+*   `src/context`: React Context para manejo de estado global (e.g., ChatbotContext).
+*   `src/hooks`: Custom hooks.
+*   `src/types`: Definiciones de tipos TypeScript.
+*   `src/assets`: Imágenes, iconos y recursos estáticos.
+*   `src/routes`: Configuración de rutas de la aplicación.
+*   `src/private`: Componentes y páginas protegidas (Admin).
