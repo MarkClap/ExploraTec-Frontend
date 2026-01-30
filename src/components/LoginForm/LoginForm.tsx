@@ -10,6 +10,7 @@ interface LoginFormProps {
     onSubmit: (e: React.FormEvent) => void;
     error?: string;
     loading?: boolean;
+    onBack?: () => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
@@ -19,14 +20,25 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     onPasswordChange,
     onSubmit,
     error,
-    loading = false
+    loading = false,
+    onBack
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
         <div className="fixed inset-0 bg-gradient-to-br from-sky-100 to-sky-20 flex items-center justify-center p-4 overflow-hidden">
             <div className="w-full max-w-4xl h-[85vh] max-h-[600px] grid md:grid-cols-2 bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-6 sm:p-8 bg-gradient-to-br from-white to-sky-50 flex items-center justify-center">
+                <div className="p-6 sm:p-8 bg-gradient-to-br from-white to-sky-50 flex items-center justify-center relative">
+                    {/* Botón para volver al home */}
+                    {onBack && (
+                        <button
+                            onClick={onBack}
+                            className="absolute top-4 left-4 text-sky-600 hover:text-sky-800 flex items-center gap-2 transition-colors duration-200 font-medium"
+                            type="button"
+                        >
+                            ← Volver
+                        </button>
+                    )}
                     <div className="w-full max-w-md space-y-6">
                         <div className="text-center">
                             <h1 className="text-2xl sm:text-3xl font-bold text-sky-900">
@@ -93,8 +105,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                                 type="submit"
                                 disabled={loading || !username || !password}
                                 className={`w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-400 transition duration-150 ease-in-out text-base font-semibold shadow-md ${loading || !username || !password
-                                        ? "bg-gray-400 cursor-not-allowed"
-                                        : "bg-sky-500 hover:bg-sky-600"
+                                    ? "bg-gray-400 cursor-not-allowed"
+                                    : "bg-sky-500 hover:bg-sky-600"
                                     }`}
                             >
                                 {loading ? (

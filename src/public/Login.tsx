@@ -46,6 +46,10 @@ export const Login: React.FC = () => {
         }
     };
 
+    const handleBack = () => {
+        navigate('/');
+    };
+
     return (
         <LoginForm
             username={username}
@@ -55,6 +59,7 @@ export const Login: React.FC = () => {
             onSubmit={handleSubmit}
             error={error || undefined}
             loading={loading}
+            onBack={handleBack}
         />
     );
 };
