@@ -123,15 +123,15 @@ export const ChatbotModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
 
   // Versión normal para usuarios autenticados
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-start p-4 sm:items-center sm:justify-center sm:p-0">
-      {/* Overlay para móviles */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 sm:hidden" onClick={onClose}></div>
+    <div className="fixed inset-0 z-50 flex items-end justify-start p-4 sm:items-center sm:justify-center sm:p-0 pointer-events-none sm:pointer-events-auto">
+      {/* Overlay para móviles removido para ver el fondo */}
+      {/* <div className="fixed inset-0 bg-black bg-opacity-50 sm:hidden" onClick={onClose}></div> */}
 
       <div
         ref={modalRef}
         className="
           w-full max-w-sm bg-white rounded-t-2xl sm:rounded-2xl shadow-xl flex flex-col overflow-hidden border relative 
-          fixed inset-0 sm:relative sm:inset-auto sm:h-[550px] sm:max-h-[80vh] sm:bottom-28 sm:left-18 z-50
+          fixed bottom-0 left-0 right-0 h-[50vh] sm:relative sm:inset-auto sm:h-[550px] sm:max-h-[80vh] sm:bottom-28 sm:left-18 z-50 pointer-events-auto
         "
       >
         {/* Header con botones */}

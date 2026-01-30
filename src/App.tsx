@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { Login } from "./public/Login";
 import { Register } from "./public/Register";
 import { Main } from "./public/Main";
-import { Dashboard } from "./private/Dashboard";
+import { DashboardPage } from "./private/DashboardPage";
 import { PublicRoute } from "./routes/PublicRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ChatbotTourPage from "./public/tour360/ChatbotWithTourPage";
@@ -50,7 +50,7 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute roles={["ADMIN"]}>
-              <Dashboard />
+              <DashboardPage />
             </ProtectedRoute>
           }
         />
